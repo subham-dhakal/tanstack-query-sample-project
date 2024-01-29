@@ -21,7 +21,7 @@ function ProductList() {
   const {
     searchParams,
     categories,
-    products,
+    data,
     isError,
     isPending,
     handleCategoryChange,
@@ -38,9 +38,12 @@ function ProductList() {
   if (isError)
     return (
       <>
-        <h1>
-          The product catalog is temporarily unavailable. Please try again later
-        </h1>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <h1 style={{ margin: "auto" }}>
+            The product catalog is temporarily unavailable. Please try again
+            later
+          </h1>
+        </Box>
       </>
     );
 
@@ -58,7 +61,7 @@ function ProductList() {
             sx={{ width: "650px", marginRight: "10px" }}
             placeholder="Search Products"
             onChange={debounce((e) => {
-              setSearchParams((prev: URLSearchParams) => {
+              setSearchParams((prev) => {
                 prev.set("q", e.target.value);
                 prev.delete("category");
                 prev.set("skip", "0");
@@ -87,14 +90,10 @@ function ProductList() {
         </Box>
 
         <Grid container spacing={2} sx={{ marginTop: "10px" }}>
-          {products?.total > 0 ? (
+          {data?.total > 0 ? (
             <>
-              {products?.products?.map((item: ProductsType) => (
+              {data?.products?.map((item: ProductsType) => (
                 <Grid item key={item.id} xs={12} sm={6} md={4} lg={3}>
-                  {/* <Link
-                  to={`/product/${item.id}`}
-                  style={{ textDecoration: "none" }}
-                > */}
                   <Card sx={{ maxWidth: 345, height: "100%" }}>
                     <CardActionArea>
                       <CardMedia
@@ -128,15 +127,14 @@ function ProductList() {
                       </CardContent>
                     </CardActionArea>
                   </Card>
-                  {/* </Link> */}
                 </Grid>
               ))}
             </>
           ) : (
-            <h2 style={{ margin: "auto" }}>0 products found for "{q}"</h2> // </Box>
+            <h2 style={{ margin: "auto" }}>0 products found for "{q}"</h2>
           )}
         </Grid>
-        {products?.total > 0 && (
+        {data?.total > 0 && (
           <Box
             m={2}
             display="flex"
@@ -155,7 +153,7 @@ function ProductList() {
             <Button
               variant="contained"
               onClick={() => handlePage(limit)}
-              disabled={limit + skip >= products?.total}
+              disabled={limit + skip >= data?.total}
             >
               Next
             </Button>

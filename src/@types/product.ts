@@ -15,19 +15,26 @@ export type ProductsType = {
 };
 
 export type DataResponseType = {
-  products: ProductsType;
+  products: ProductsType[];
   total: number;
   skip: number;
   limit: number;
 };
 
+// export type SearchParamsType = {
+//   limit?: string;
+//   skip?: string;
+//   category?: string;
+//   q?: string;
+// };
+
 export interface ProductContextProps {
   searchParams: URLSearchParams;
   categories: string[] | undefined;
-  products: ProductsType;
+  data: DataResponseType;
   isError: boolean;
   isPending: boolean;
   handleCategoryChange: (e: SelectChangeEvent) => void;
   handlePage: (moveCount: number) => void;
-  setSearchParams: URLSearchParams;
+  setSearchParams: () => void;
 }

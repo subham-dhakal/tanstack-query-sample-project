@@ -47,11 +47,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     },
   });
 
-  const {
-    data: products,
-    isError,
-    isPending,
-  } = useQuery({
+  const { data, isError, isPending } = useQuery({
     queryKey: ["products", limit, skip, q, category],
     queryFn: async () => {
       const endpoint = category
@@ -75,7 +71,7 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     searchParams,
     setSearchParams,
     categories,
-    products,
+    data,
     isError,
     isPending,
     handleCategoryChange,
