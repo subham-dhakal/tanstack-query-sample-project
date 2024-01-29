@@ -21,12 +21,12 @@ export type DataResponseType = {
   limit: number;
 };
 
-// export type SearchParamsType = {
-//   limit?: string;
-//   skip?: string;
-//   category?: string;
-//   q?: string;
-// };
+export type SearchParamsType = {
+  limit?: string;
+  skip?: string;
+  category?: string;
+  q?: string;
+};
 
 export interface ProductContextProps {
   searchParams: URLSearchParams;
@@ -36,5 +36,5 @@ export interface ProductContextProps {
   isPending: boolean;
   handleCategoryChange: (e: SelectChangeEvent) => void;
   handlePage: (moveCount: number) => void;
-  setSearchParams: () => void;
+  handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

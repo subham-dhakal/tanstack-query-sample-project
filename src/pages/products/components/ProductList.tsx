@@ -3,7 +3,6 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import debounce from "lodash.debounce";
 import {
   CardActionArea,
   FormControl,
@@ -26,7 +25,7 @@ function ProductList() {
     isPending,
     handleCategoryChange,
     handlePage,
-    setSearchParams,
+    handleSearchChange,
   } = useProductContext();
 
   const skip: number = parseInt(searchParams.get("skip") || "0");
@@ -60,14 +59,7 @@ function ProductList() {
             variant="outlined"
             sx={{ width: "650px", marginRight: "10px" }}
             placeholder="Search Products"
-            onChange={debounce((e) => {
-              setSearchParams((prev) => {
-                prev.set("q", e.target.value);
-                prev.delete("category");
-                prev.set("skip", "0");
-                return prev;
-              });
-            }, 1000)}
+            onChange={handleSearchChange}
           />
           <Box sx={{ width: "200px" }}>
             <FormControl fullWidth>

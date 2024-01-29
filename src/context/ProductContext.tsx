@@ -4,6 +4,7 @@ import client from "../utils/client";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { useSearchParams } from "react-router-dom";
 import { ProductContextProps } from "../@types/product";
+import debounce from "lodash.debounce";
 
 const ProductContext = createContext<ProductContextProps | undefined>(
   undefined
@@ -67,15 +68,27 @@ export const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const handleSearchChange = debounce(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchParams((prev) => {
+        prev.set("q", e.target.value);
+        prev.delete("category");
+        prev.set("skip", "0");
+        return prev;
+      });
+    },
+    1000
+  );
+
   const contextValue: ProductContextProps = {
     searchParams,
-    setSearchParams,
     categories,
     data,
     isError,
     isPending,
     handleCategoryChange,
     handlePage,
+    handleSearchChange,
   };
 
   return (
