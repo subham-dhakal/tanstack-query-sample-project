@@ -14,24 +14,21 @@ import {
   TextField,
 } from "@mui/material";
 import Select from "@mui/material/Select";
-import { useProductContext } from "../../../context/ProductContext";
+import { useProductStore } from "../../../store/ProductStore";
+import { useCategory } from "../../../hooks/useCategory";
+import { useProduct } from "../../../hooks/useProduct";
 
 function ProductList() {
+  const { categories } = useCategory();
+  const { data, isPending, isError } = useProduct();
   const {
-    searchParams,
-    categories,
-    data,
-    isError,
-    isPending,
+    filter: { limit, skip, category, q },
     handleCategoryChange,
     handlePage,
     handleSearchChange,
-  } = useProductContext();
-
-  const skip: number = parseInt(searchParams.get("skip") || "0");
-  const limit: number = parseInt(searchParams.get("limit") || "8");
-  const q: string = searchParams.get("q") || "";
-  const category: string = searchParams.get("category") || "";
+  } = useProductStore();
+  const limitNumber = parseInt(limit);
+  const skipNumber = parseInt(skip);
 
   if (isPending) return <h1>Loading...</h1>;
   if (isError)
@@ -136,16 +133,16 @@ function ProductList() {
             <Button
               variant="contained"
               sx={{ marginRight: 2 }}
-              onClick={() => handlePage(-limit)}
-              disabled={skip < limit}
+              onClick={() => handlePage(-limitNumber)}
+              disabled={skipNumber < limitNumber}
             >
               Previous
             </Button>
 
             <Button
               variant="contained"
-              onClick={() => handlePage(limit)}
-              disabled={limit + skip >= data?.total}
+              onClick={() => handlePage(limitNumber)}
+              disabled={limitNumber + skipNumber >= data?.total}
             >
               Next
             </Button>
