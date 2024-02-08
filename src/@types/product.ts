@@ -1,17 +1,17 @@
 import { SelectChangeEvent } from "@mui/material/Select";
 
 export type ProductsType = {
-  id: number;
+  id?: number;
   title: string;
-  price: string;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand: string;
-  category: string;
+  price?: string;
+  discountPercentage?: number;
+  rating?: number;
+  stock?: number;
+  brand?: string;
+  category?: string;
   description: string;
-  thumbnail: string;
-  images: string[];
+  thumbnail?: string;
+  images?: string[];
 };
 
 export type DataResponseType = {
