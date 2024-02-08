@@ -1,16 +1,3 @@
-<!-- ## Installation
-
-```bash
-$ yarn install
-```
-
-## Running the app
-
-```bash
-$ yarn dev
-
-``` -->
-
 # Sample Project: Using TanStack Query and Zustand with DummyJSON API
 
 Welcome to our sample project demonstrating the integration of TanStack Query and Zustand with the DummyJSON API. This README will provide you with an introduction to both libraries, as well as instructions on how to get started with our project.
@@ -59,5 +46,7 @@ $ yarn dev
 In this sample project, we demonstrate how to use Tanstack Query for data fetching and caching, Zustand for state management, and integrate with the DummyJSON API to fetch mock product data. The project allows you to:
 
 - Fetch product data from the DummyJSON API.
+- Implement pagination to navigate through multiple pages of product listings.
+- Add new products
 - Filter products by categories.
-- Search for products by name.
+- Search for products.
