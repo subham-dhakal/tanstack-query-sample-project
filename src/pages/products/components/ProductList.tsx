@@ -1,8 +1,4 @@
 import { ProductsType } from "../../../@types/product";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
 import {
   CardActionArea,
   FormControl,
@@ -12,15 +8,19 @@ import {
   Button,
   Box,
   TextField,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
 } from "@mui/material";
 import Select from "@mui/material/Select";
+import AddProductDialog from "./AddProductDialog";
 import { useProductStore } from "../../../store/ProductStore";
-import { useCategory } from "../../../hooks/useCategory";
-import { useProduct } from "../../../hooks/useProduct";
+import { useProduct, useCategory } from "../../../services/queries";
 
 function ProductList() {
   const { categories } = useCategory();
-  const { data, isPending, isError } = useProduct();
+  const { data, isLoading, isError } = useProduct();
   const {
     filter: { limit, skip, category, q },
     handleCategoryChange,
@@ -30,7 +30,7 @@ function ProductList() {
   const limitNumber = parseInt(limit);
   const skipNumber = parseInt(skip);
 
-  if (isPending) return <h1>Loading...</h1>;
+  if (isLoading) return <h1>Loading...</h1>;
   if (isError)
     return (
       <>
@@ -51,7 +51,7 @@ function ProductList() {
             Products
           </Typography>
         </div>
-        <Box display="flex" justifyContent="center" alignItems="center">
+        <Box display="flex" justifyContent="flex-start" alignItems="flex-start">
           <TextField
             variant="outlined"
             sx={{ width: "650px", marginRight: "10px" }}
@@ -76,6 +76,7 @@ function ProductList() {
               </Select>
             </FormControl>
           </Box>
+          <AddProductDialog />
         </Box>
 
         <Grid container spacing={2} sx={{ marginTop: "10px" }}>

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { SelectChangeEvent } from "@mui/material/Select";
 import debounce from "lodash.debounce";
+import { DataResponseType } from "../@types/product";
 
 type FilterType = {
   limit: string;
@@ -10,6 +11,10 @@ type FilterType = {
 };
 
 interface ProductStore {
+  data: DataResponseType | null;
+  categories: string[] | undefined;
+  setProducts: (data: DataResponseType) => void;
+  setCategory: (data: string[]) => void;
   filter: FilterType;
   handleCategoryChange: (e: SelectChangeEvent) => void;
   handlePage: (moveCount: number) => void;
@@ -17,6 +22,14 @@ interface ProductStore {
 }
 
 export const useProductStore = create<ProductStore>()((set) => ({
+  data: null,
+  categories: [],
+  setProducts: async (data) => {
+    set({ data });
+  },
+  setCategory: async (data) => {
+    set({ categories: data });
+  },
   filter: { limit: "8", skip: "0", category: "", q: "" },
   handleCategoryChange: (e: SelectChangeEvent) => {
     set((state) => ({
